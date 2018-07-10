@@ -1,7 +1,7 @@
 
-####app.json
+#### app.json
 > 当前小程序的全局配置，包含页面路径、界面表现、网络超时时间等
-#####字段列表
+##### 字段列表
 
 | 属性     | 类型   | 必填    | 描述 |
 |---------|--------|--------|----  |
@@ -54,6 +54,6 @@ list的属性
 - debug
 是否开启debugger
 
-###page.json
+### page.json
 配置项与app.json中的windows属性相同，用来配置单独页面的windows，会覆盖app.json中的windows
 
