@@ -1,0 +1,63 @@
+Arguments: 
+  /Users/yangjuanshi/.nvm/versions/node/v8.11.1/bin/node /Users/yangjuanshi/.nvm/versions/node/v8.11.1/bin/yarn install
+
+PATH: 
+  /usr/local/git/bin:/sw/bin/:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/yangjuanshi/.nvm/versions/node/v8.11.1/bin:/usr/local/git/bin:/sw/bin/:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/bin/:/usr/local/bin/
+
+Yarn version: 
+  1.7.0
+
+Node version: 
+  8.11.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/yangjuanshi/Documents/works/books/package.json: Unexpected token } in JSON at position 634
+      at JSON.parse (<anonymous>)
+      at /Users/yangjuanshi/.nvm/versions/node/v8.11.1/lib/node_modules/yarn/lib/cli.js:1130:59
+      at Generator.next (<anonymous>)
+      at step (/Users/yangjuanshi/.nvm/versions/node/v8.11.1/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /Users/yangjuanshi/.nvm/versions/node/v8.11.1/lib/node_modules/yarn/lib/cli.js:109:13
+      at <anonymous>
+
+npm manifest: 
+  {
+    "name": "books",
+    "version": "1.0.0",
+    "description": "读书笔记",
+    "main": "index.js",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/poorEnglish/books.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/poorEnglish/books/issues"
+    },
+    "homepage": "https://github.com/poorEnglish/books#readme",
+    "dependencies": {
+      "@tensorflow/tfjs": "^0.11.6"
+    },
+    "scripts": {
+      "watch": "cross-env NODE_ENV=development parcel index.html --no-hmr --open",
+      "build": "cross-env NODE_ENV=production parcel build index.html --no-minify --public-url ./",
+    },
+    "devDependencies": {
+      "babel-plugin-transform-runtime": "~6.23.0",
+      "babel-polyfill": "~6.26.0",
+      "babel-preset-env": "~1.6.1",
+      "clang-format": "~1.2.2",
+      "cross-env": "^5.1.6",
+      "parcel-bundler": "~1.8.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

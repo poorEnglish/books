@@ -1,1 +1,2 @@
-//这个JS随时引入章节的js，打包刀html里
+
+import _ from '../books/Mostly-Adequate-Guide/container'
