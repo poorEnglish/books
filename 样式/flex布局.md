@@ -66,4 +66,14 @@
   缩小比例 默认1，即会缩小，0不会
 
 - flex-basis
+  定义在分配多余空间前，项目占据的主轴空间。(浏览器会根据此属性计算主轴是否有多余空间)
+  值为length|auto，auto是默认值
+
+- flex
+  此属性是flex-grow、flex-shrink、flex-basis的缩写，默认为 0 1 auto
+
+- align-self
+  允许单个项目可以和其他项目有不一样的对齐方式，同容器的align-item基本一直，多了个auto属性
   
+        
+    
