@@ -1,0 +1,10 @@
+.middle{
+  left:50%;
+  transform: translate(-50%)
+}
+
+.no-wrap{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /*不换行*/
+}
