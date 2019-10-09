@@ -32,8 +32,8 @@ function bubbleSort(arr) {
 // 100000 233.358ms
 function mergeSort(arr) {
   //在arr.lengt <=10 的情况下使用插入排序，十万的量用了179ms 还是快了不少 这也是为什么v8在大于10的时候才使用快速排序的原因吧
-  // if(arr.length <= 10) return insertSort(arr);
-  if (arr.length <= 1) return arr;
+  if(arr.length <= 10) return insertSort(arr);
+  // if (arr.length <= 1) return arr;
   let middle = parseInt(arr.length / 2);
   let leftArr = mergeSort(arr.slice(0, middle));
   let rightArr = mergeSort(arr.slice(middle));
@@ -63,6 +63,50 @@ function shellSort(arr) {
   return arr;
 }
 
+//1000000 190.307ms    new Array 175.934ms
+//堆排序分为两个阶段，第一阶段是把数组分配成堆，第二阶段是将顶部和底部最后的数交换，将堆的长度减一，得到顶部数，在hepayFy
+//用到的核心是heapyFy
+function heapSort(arr){
+  let heapSize = arr.length;
+  //建堆
+  for(let i =Math.floor(heapSize/2); i > 0 ; i--){
+    heapyFy(arr,i - 1);
+  }
+  //一步步取值并排序
+  // let res =new Array(heapSize);
+  let res = [];
+  while(heapSize >= 1){
+    // res[heapSize - 1] = arr[0];
+    res.push(arr[0])
+    arr[0] = arr[heapSize - 1];
+    heapyFy(arr,0);
+    heapSize -= 1;
+  }
+
+  return res;
+
+  function heapyFy(arr,index){
+    //这里不用递归，可能性能会好一点
+    let i = index;
+    let  bootomLeftIndex ;
+    while((bootomLeftIndex = ((i + 1) << 1) - 1) < heapSize){
+      let max = arr[i];
+      // //这里做一个保障，不去判断是否存在第二个子元素，单纯的通过最小integer来玩,
+      // let maxBottomIndex = arr[bootomLeftIndex] > (arr[bootomLeftIndex + 1] || Number.MIN_SAFE_INTEGER) ? bootomLeftIndex : bootomLeftIndex  + 1;
+      //但是如果这里做判断，就不用在第二阶段操作数组了
+      let maxBottomIndex = bootomLeftIndex + 1 >= heapSize? bootomLeftIndex : arr[bootomLeftIndex] > arr[bootomLeftIndex + 1] ? bootomLeftIndex : bootomLeftIndex + 1;
+      if(arr[maxBottomIndex] > max){
+        let tmp = arr[i];
+        arr[i] = arr[maxBottomIndex];
+        arr[maxBottomIndex] = tmp;
+      }else{
+        return;
+      }
+      i = maxBottomIndex ;
+    }
+  }
+}
+
 function sortTimeTracer(sortFunc, length) {
   let testArr = [],i = 0;
   while (i < length) {
@@ -70,11 +114,15 @@ function sortTimeTracer(sortFunc, length) {
     i++
   }
   console.time('testStart');
-  console.log(sortFunc(testArr));
-  // sortFunc(testArr)
+  // console.log(testArr)
+  // console.log(sortFunc(testArr));
+  sortFunc(testArr)
   console.timeEnd('testStart');
 }
 
-// console.log(shellSort(testArr));
+// console.log(heapSort(testArr));
 
-sortTimeTracer(bubbleSort, 100);
+
+
+
+sortTimeTracer(heapSort, 1000000);
