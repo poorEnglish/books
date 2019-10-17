@@ -1,66 +1,106 @@
-import { resolve } from "path";
-
-function myPromise(constru){
-
-    //写入闭包，保证外部不能改变state
-    let {getStatus,setStatus} = (function(){
-        let state = 'pending';
-        return {
-            getStatus(){
-                return state;
-            },
-            setStatus(nextState){
-                state = nextState
-            }
-        }
-    })()
+function MyPromise(excutor){
     
+    this.state = 'pending';
     this.value = undefined;
     this.reason = undefined;
-    this.onReject = undefined;
-    this.onResolve = undefined;
-    this.getStatus = getStatus;
-    let self = this;
-    function reslove(value){
-        if(getStatus() === 'pending'){
-            setStatus('fullfiled');
-            self.value = value;
-            Object.prototype.toString.call(self.onResolve) == '[object Function]' &&  self.onResolve(value);
+    this.resolveCallbacks = [];
+    this.rejectedCallbacks = []
+
+    resolve = (value)=>{
+        let state = this.state;
+        if(state == 'pending'){
+            state = 'fullFilled';
+            this.value = value;
+            this.resolveCallbacks.forEach(fn => fn())
         } 
     }
 
-    function reject(reason){
-        if(getStatus() === 'pending') {
-            setStatus('rejected');
-            self.reason = reason;
-            Object.prototype.toString.call(self.onReject) == '[object Function]' &&  self.onReject(reason);
+    reject = (reason)=>{
+        let state = this.state;
+        if(state == 'pending'){
+            this.reason = reason
+            state = 'rejected';
+            this.rejectedCallbacks.forEach(fn => fn())
+        } 
+    }
+
+    excutor(resolve,reject);
+}
+
+MyPromise.prototype.then = function(onFullfiled,onRejected){
+    onFullfiled = typeof onFullfiled == 'function' ? onFullfiled : val => val;
+    onRejected = typeof onRejected == 'function' ? onRejected : e => {throw e}
+    let state = this.state;
+    let promise2 = new MyPromise((resolve,reject)=>{
+        if(state == 'pending'){
+            this.resolveCallbacks.push(()=>{
+                let x = onFullfiled(this.value);
+                resolvePromise(promise2,x,resolve,reject)
+            })
+            this.rejectedCallbacks.push(()=>{
+                let x = onRejected(this.reason);
+                resolvePromise(promise2,x,resolve,reject)
+            })
+        }else if(state == 'fullFilled'){
+            setTimeout(()=>{
+                let x = onFullfiled(this.value);
+                resolvePromise(promise2,x,resolve,reject)
+            })
+        }else{
+            setTimeout(()=>{
+                let x = onRejected(this.reason);
+                resolvePromise(promise2,x,resolve,reject)
+            })
         }
-       
+    })
+    return promise2;
+}
+
+function resolvePromise(promise2,x,resolve,reject){
+    if(x === promise2){
+        return reject(new Error('Chaining cycle detected for promise'))
     }
 
-    try{
-        constru(resolve,reject)
-    }
-    catch(e){
-        reject(e)
+    let called = false;
+    if(x!= null && (typeof x == 'function' || typeof x == 'object')){
+        try{
+            if(typeof x.then == 'function'){
+                x.then(y => {
+                    if(called) return;
+                    called = true;
+                    resolvePromise(promise2,y,resolve,reject)
+                })
+            }else{
+                if(called) return;
+                called = true;
+                resolve(x);
+            }
+        }catch(e){
+            if(called) return;
+            called = true;
+            reject(e)
+        }
+    }else{
+        if(called) return;
+        called = true;
+        resolve(x);
     }
 }
 
-myPromise.prototype.then = function(onResolved,onRejected){
-    let self = this;
-    let promise2;
-    if(this.getStatus() === 'pending'){
-        
-    }
-}
 
-
-
-new Promise((resolve,reject)=>{
-
-}).then((res)=>{
-    return res;
-},(rej)=>{
-    return rej
+new MyPromise((resolve,reject)=>{
+    setTimeout(()=>{
+        console.log(111111);
+        resolve(2222)
+    },10)
+}).then((ff)=>{
+    console.log(ff);
+    return new MyPromise((resolve,reject)=>{
+        reject(new Error('test'))
+    })   
+}).then(()=>{
+    console.log(3333);
+},(or)=>{
+    console.log(444);
+    console.log(or)
 })
-  .then()

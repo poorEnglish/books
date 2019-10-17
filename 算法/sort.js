@@ -95,13 +95,12 @@ function heapSort(arr){
       // let maxBottomIndex = arr[bootomLeftIndex] > (arr[bootomLeftIndex + 1] || Number.MIN_SAFE_INTEGER) ? bootomLeftIndex : bootomLeftIndex  + 1;
       //但是如果这里做判断，就不用在第二阶段操作数组了
       let maxBottomIndex = bootomLeftIndex + 1 >= heapSize? bootomLeftIndex : arr[bootomLeftIndex] > arr[bootomLeftIndex + 1] ? bootomLeftIndex : bootomLeftIndex + 1;
-      if(arr[maxBottomIndex] > max){
-        let tmp = arr[i];
-        arr[i] = arr[maxBottomIndex];
-        arr[maxBottomIndex] = tmp;
-      }else{
-        return;
-      }
+
+      if(arr[maxBottomIndex] <= max) return;
+  
+      let tmp = arr[i];
+      arr[i] = arr[maxBottomIndex];
+      arr[maxBottomIndex] = tmp;
       i = maxBottomIndex ;
     }
   }
