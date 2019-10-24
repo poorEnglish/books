@@ -26,7 +26,7 @@ class MyPromise {
 		}
 	}
 
-	reject(reason){
+	static reject(reason){
 		if (this.status == 'pending') {
 			this.status = 'rejected';
 			this.reason = reason;
@@ -119,42 +119,42 @@ function resolvePromise(promise2, x, resolve, reject){
 }
 
 
-let p1 = new MyPromise((resolve,reject)=>{
-	setTimeout(()=>{
-		console.log(222222)
-		resolve('hello')
-	})
-	console.log(11111);
-})
+// let p1 = new MyPromise((resolve,reject)=>{
+// 	setTimeout(()=>{
+// 		console.log(222222)
+// 		resolve('hello')
+// 	})
+// 	console.log(11111);
+// })
 
-let p3 = p1.then((result)=>{
-	console.log('p11111');
-	setTimeout(()=>{
-		console.log('p1222222')
-		console.log(result);
-	},100)
-	return 'p13333'
-})
+// let p3 = p1.then((result)=>{
+// 	console.log('p11111');
+// 	setTimeout(()=>{
+// 		console.log('p1222222')
+// 		console.log(result);
+// 	},100)
+// 	return 'p13333'
+// })
 
 
-p3.then(full=>{
-	console.log('foo')
-	console.log(full)
-},rej =>{
-	console.log(rej)
-})
+// p3.then(full=>{
+// 	console.log('foo')
+// 	console.log(full)
+// },rej =>{
+// 	console.log(rej)
+// })
 
-let p2 =p1.then((val)=>{
-	console.log(val + ' world')
-	return new MyPromise((res,rej)=>{
-		setTimeout(()=>{})
-			rej(new Error('test error'))
-			// res(22);
-		},10)
-},err=>{
-	console.log(err)
-})
-p2.then(res =>(res),err =>{
-	console.log(33333);
-	console.log(err);
-})
+// let p2 =p1.then((val)=>{
+// 	console.log(val + ' world')
+// 	return new MyPromise((res,rej)=>{
+// 		setTimeout(()=>{})
+// 			rej(new Error('test error'))
+// 			// res(22);
+// 		},10)
+// },err=>{
+// 	console.log(err)
+// })
+// p2.then(res =>(res),err =>{
+// 	console.log(33333);
+// 	console.log(err);
+// })
