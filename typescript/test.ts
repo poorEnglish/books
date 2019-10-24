@@ -23,7 +23,7 @@ let x:[string,boolean,number]
 x=['sd',false,21]
 
 //超过表示长度的地方可以添加任意定义过的类型
-x[5]='dsa' ;x[6]=true
+x[5]='dsa'; x[6]=true
 
 
 
