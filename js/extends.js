@@ -119,6 +119,7 @@ SubType.prototype.sayAge = function(){
   console.log(this.age);
 }
 
-let subT = new SubType('yang',23);
-subT.sayName();
-subT.sayAge();
+// let subT = new SubType('yang',23);
+// subT.sayName();
+// subT.sayAge();
+
